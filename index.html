@@ -7,15 +7,15 @@
     <meta name="description" content="The simplest way to print. Upload to the app, scan at the kiosk, collect your documents.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
         
-        /* Ultra-refined animations */
+        /* Smooth Reveal Animation */
         .reveal {
             opacity: 0;
-            transform: translateY(10px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
         
         .reveal.active {
@@ -25,170 +25,254 @@
 
         .delay-100 { transition-delay: 0.1s; }
         .delay-200 { transition-delay: 0.2s; }
-        .delay-300 { transition-delay: 0.3s; }
 
-        /* Custom Scrollbar to hide it but keep functionality */
+        /* Hide scrollbar */
         ::-webkit-scrollbar {
             width: 0px;
             background: transparent;
         }
+
+        /* Abstract Sheet Decoration */
+        .sheet-stack {
+            position: relative;
+        }
+        .sheet-stack::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: -10px;
+            bottom: -10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            z-index: -1;
+        }
     </style>
 </head>
-<body class="bg-white text-black antialiased selection:bg-black selection:text-white">
+<body class="bg-white text-slate-900 antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- Minimal Navbar -->
-    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
-        <div class="max-w-screen-xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="text-xl font-semibold tracking-tight hover:opacity-70 transition-opacity">inksheet.app</a>
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
+                    i
+                </div>
+                <span class="text-xl font-bold tracking-tight text-slate-900">inksheet</span>
+            </a>
             
-            <div class="flex items-center gap-8">
-                <a href="#workflow" class="hidden md:block text-sm text-gray-500 hover:text-black transition-colors">How it Works</a>
-                <a href="#safety" class="hidden md:block text-sm text-gray-500 hover:text-black transition-colors">Privacy</a>
-                <a href="#" class="text-sm font-medium bg-black text-white px-5 py-2.5 rounded-full hover:bg-gray-800 transition-colors">
-                    Download
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#how-it-works" class="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">How it Works</a>
+                <a href="#locations" class="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Locations</a>
+                <a href="#" class="text-sm font-semibold bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-blue-600 transition-colors shadow-lg shadow-slate-900/20 hover:shadow-blue-600/30">
+                    Get the App
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="min-h-[90vh] flex flex-col justify-center pt-32 pb-20 px-6">
-        <div class="max-w-4xl mx-auto text-center reveal active">
-            <h1 class="text-6xl md:text-8xl font-semibold tracking-tight leading-tight mb-8">
-                Print without<br>friction.
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-400 font-light max-w-2xl mx-auto mb-12 leading-relaxed">
-                The distributed print infrastructure. <br>
-                Upload securely. Scan at the kiosk. Collect in seconds.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button class="w-full sm:w-auto px-8 py-4 bg-black text-white rounded-xl text-sm font-medium hover:bg-gray-900 transition-transform active:scale-95 flex items-center justify-center gap-3">
-                    <i data-lucide="apple" class="w-5 h-5"></i>
-                    App Store
-                </button>
-                <button class="w-full sm:w-auto px-8 py-4 bg-gray-100 text-black rounded-xl text-sm font-medium hover:bg-gray-200 transition-transform active:scale-95 flex items-center justify-center gap-3">
-                    <i data-lucide="play" class="w-5 h-5 fill-current"></i>
-                    Google Play
-                </button>
-            </div>
-        </div>
+    <!-- Hero Section (Dark Ink Theme) -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-900 text-white">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-600/10 blur-[100px] rounded-full translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-1/2 h-full bg-indigo-600/10 blur-[100px] rounded-full -translate-x-1/2"></div>
 
-        <!-- Minimal Phone Graphic (CSS Only) -->
-        <div class="mt-24 mx-auto w-full max-w-[300px] reveal delay-200">
-            <div class="relative aspect-[9/19] bg-white border border-gray-200 rounded-[3rem] shadow-2xl overflow-hidden">
-                <!-- Status Bar -->
-                <div class="absolute top-0 w-full h-14 bg-white z-10 flex justify-between items-end px-6 pb-2">
-                    <span class="text-[10px] font-bold">9:41</span>
-                    <div class="flex gap-1.5">
-                        <div class="w-3 h-3 bg-black rounded-full"></div>
-                        <div class="w-3 h-3 bg-black rounded-full"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="text-center lg:text-left reveal active">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-8">
+                        <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+                        Live in 50+ Cities
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+                        Your printer is <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">in the cloud.</span>
+                    </h1>
+                    <p class="text-lg text-slate-400 mb-10 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                        Upload to Inksheet. Scan at a kiosk. Watch your documents appear on fresh paper in seconds. No drivers, no cables.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <button class="flex items-center justify-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold hover:bg-blue-50 transition hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                            <i data-lucide="smartphone" class="w-5 h-5 text-blue-600"></i>
+                            Download App
+                        </button>
+                        <button class="flex items-center justify-center gap-3 bg-slate-800 text-white border border-slate-700 px-8 py-4 rounded-2xl font-semibold hover:bg-slate-700 transition hover:-translate-y-1">
+                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            Find Kiosk
+                        </button>
                     </div>
                 </div>
-                
-                <!-- App Interface -->
-                <div class="p-6 pt-20 h-full flex flex-col">
-                    <div class="mb-8">
-                        <h2 class="text-2xl font-semibold mb-1">Documents</h2>
-                        <p class="text-xs text-gray-400">3 files ready to print</p>
-                    </div>
 
-                    <!-- File Item 1 -->
-                    <div class="py-4 border-b border-gray-50 flex items-center gap-4">
-                        <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-gray-400">
-                            <i data-lucide="file" class="w-5 h-5 stroke-[1.5]"></i>
-                        </div>
-                        <div class="flex-1">
-                            <div class="text-sm font-medium">Thesis_Final.pdf</div>
-                            <div class="text-[10px] text-gray-400">45 Pages • B&W</div>
-                        </div>
-                    </div>
+                <!-- Visual: The "Sheet" App Mockup -->
+                <div class="relative flex justify-center lg:justify-end reveal delay-200">
+                    <div class="relative w-[320px] bg-white rounded-[2.5rem] p-4 shadow-2xl sheet-stack">
+                        <!-- Phone Bezel -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-900 rounded-b-xl z-20"></div>
+                        
+                        <!-- Screen Content -->
+                        <div class="bg-slate-50 h-[600px] rounded-[2rem] overflow-hidden flex flex-col relative">
+                            <!-- Header -->
+                            <div class="bg-slate-900 p-8 pt-16 text-white rounded-b-[2.5rem] shadow-lg z-10">
+                                <div class="flex justify-between items-center mb-4">
+                                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700">
+                                        <span class="font-bold text-sm">JD</span>
+                                    </div>
+                                    <i data-lucide="bell" class="w-5 h-5 text-slate-400"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold">My Print Queue</h3>
+                                <p class="text-slate-400 text-sm mt-1">Ready to release</p>
+                            </div>
 
-                    <!-- File Item 2 -->
-                    <div class="py-4 border-b border-gray-50 flex items-center gap-4">
-                        <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-gray-400">
-                            <i data-lucide="image" class="w-5 h-5 stroke-[1.5]"></i>
-                        </div>
-                        <div class="flex-1">
-                            <div class="text-sm font-medium">Design_V2.png</div>
-                            <div class="text-[10px] text-gray-400">1 Page • Color</div>
-                        </div>
-                    </div>
+                            <!-- List -->
+                            <div class="p-6 space-y-4">
+                                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 group cursor-pointer hover:border-blue-500 transition-colors">
+                                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                        <i data-lucide="file-text" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-bold text-slate-900 text-sm">Biology_Notes.pdf</h4>
+                                        <p class="text-xs text-slate-500">12 Pages • B&W</p>
+                                    </div>
+                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                </div>
 
-                    <div class="mt-auto">
-                        <button class="w-full py-4 bg-black text-white rounded-2xl text-sm font-medium flex items-center justify-center gap-2">
-                            <i data-lucide="scan" class="w-4 h-4"></i>
-                            Scan QR
-                        </button>
+                                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 group cursor-pointer hover:border-blue-500 transition-colors">
+                                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                        <i data-lucide="image" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-bold text-slate-900 text-sm">Poster_Art.jpg</h4>
+                                        <p class="text-xs text-slate-500">1 Page • Color</p>
+                                    </div>
+                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                </div>
+                            </div>
+
+                            <!-- Scan Button -->
+                            <div class="mt-auto p-6 bg-gradient-to-t from-slate-100 to-transparent">
+                                <button class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors">
+                                    <i data-lucide="qr-code" class="w-5 h-5"></i>
+                                    Scan QR at Kiosk
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Workflow Section -->
-    <section id="workflow" class="py-32 px-6 border-t border-gray-100">
-        <div class="max-w-screen-xl mx-auto">
-            <div class="grid md:grid-cols-3 gap-16 md:gap-8">
+    <!-- How It Works (White Paper Theme) -->
+    <section id="how-it-works" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Paperwork made painless.</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto text-lg">We removed the friction. No finding a shop, no waiting for a PC, no exact change.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12 relative">
+                <!-- Connector Line -->
+                <div class="hidden md:block absolute top-12 left-[20%] right-[20%] h-0.5 bg-slate-100 -z-10"></div>
+
                 <!-- Step 1 -->
-                <div class="group reveal">
-                    <span class="block text-xs font-mono text-gray-400 mb-6">01</span>
-                    <h3 class="text-xl font-medium mb-3">Upload</h3>
-                    <p class="text-gray-500 font-light leading-relaxed">
-                        Add files securely from your device or cloud storage. We optimize formats instantly.
+                <div class="text-center group reveal">
+                    <div class="w-24 h-24 mx-auto bg-white border-4 border-slate-50 rounded-full flex items-center justify-center mb-6 shadow-sm group-hover:border-blue-100 group-hover:scale-110 transition-all duration-300">
+                        <div class="w-16 h-16 bg-slate-900 rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="upload-cloud" class="w-8 h-8"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">1. Upload</h3>
+                    <p class="text-slate-500 leading-relaxed px-4">
+                        Send files from your phone or laptop. We format them instantly for print.
                     </p>
                 </div>
 
                 <!-- Step 2 -->
-                <div class="group reveal delay-100">
-                    <span class="block text-xs font-mono text-gray-400 mb-6">02</span>
-                    <h3 class="text-xl font-medium mb-3">Locate</h3>
-                    <p class="text-gray-500 font-light leading-relaxed">
-                        Find the nearest Inksheet kiosk. Libraries, cafes, universities. Always open.
+                <div class="text-center group reveal delay-100">
+                    <div class="w-24 h-24 mx-auto bg-white border-4 border-slate-50 rounded-full flex items-center justify-center mb-6 shadow-sm group-hover:border-blue-100 group-hover:scale-110 transition-all duration-300">
+                        <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="map" class="w-8 h-8"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">2. Locate</h3>
+                    <p class="text-slate-500 leading-relaxed px-4">
+                        Find an Inksheet Kiosk nearby. They are everywhere you work and study.
                     </p>
                 </div>
 
                 <!-- Step 3 -->
-                <div class="group reveal delay-200">
-                    <span class="block text-xs font-mono text-gray-400 mb-6">03</span>
-                    <h3 class="text-xl font-medium mb-3">Print</h3>
-                    <p class="text-gray-500 font-light leading-relaxed">
-                        Scan the kiosk QR code. Payment is automatic. Documents print immediately.
+                <div class="text-center group reveal delay-200">
+                    <div class="w-24 h-24 mx-auto bg-white border-4 border-slate-50 rounded-full flex items-center justify-center mb-6 shadow-sm group-hover:border-blue-100 group-hover:scale-110 transition-all duration-300">
+                        <div class="w-16 h-16 bg-white border-2 border-slate-900 rounded-full flex items-center justify-center text-slate-900">
+                            <i data-lucide="printer" class="w-8 h-8"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">3. Print</h3>
+                    <p class="text-slate-500 leading-relaxed px-4">
+                        Scan the code. Payment is seamless. Collect your documents.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Privacy Statement -->
-    <section id="safety" class="py-32 px-6 bg-gray-50">
-        <div class="max-w-2xl mx-auto text-center reveal">
-            <i data-lucide="lock" class="w-8 h-8 mx-auto mb-8 text-black stroke-[1.5]"></i>
-            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-6"> ephemeral by design.</h2>
-            <p class="text-lg text-gray-500 font-light leading-relaxed mb-12">
-                We believe your documents belong to you. Files are encrypted in transit and permanently deleted from our servers immediately after printing.
-            </p>
-            <div class="flex justify-center gap-8 text-xs font-medium text-gray-400 uppercase tracking-widest">
-                <span>End-to-End Encryption</span>
-                <span>•</span>
-                <span>Auto-Delete</span>
+    <!-- Feature Grid (Blue Accent) -->
+    <section class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white p-10 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-shadow duration-300 reveal">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">Ephemeral Privacy.</h3>
+                    <p class="text-slate-500 leading-relaxed text-lg">
+                        We don't hold your data. Files are encrypted during upload and <span class="text-blue-600 font-semibold">permanently deleted</span> from the kiosk immediately after printing.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white p-10 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-shadow duration-300 reveal delay-100">
+                    <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-900 mb-6">
+                        <i data-lucide="credit-card" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">Cashless & Easy.</h3>
+                    <p class="text-slate-500 leading-relaxed text-lg">
+                        Forget carrying coins. Pay seamlessly with Apple Pay, Google Pay, or Credit Card directly inside the app.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 px-6 border-t border-gray-100">
-        <div class="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <span class="text-sm font-semibold">inksheet.app</span>
-            
-            <div class="flex gap-6 text-sm text-gray-500">
-                <a href="#" class="hover:text-black transition-colors">Privacy</a>
-                <a href="#" class="hover:text-black transition-colors">Terms</a>
-                <a href="mailto:support@inksheet.app" class="hover:text-black transition-colors">Contact</a>
+    <footer class="bg-slate-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 border-b border-slate-800 pb-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-xs">i</div>
+                        <span class="text-xl font-bold">inksheet</span>
+                    </div>
+                    <p class="text-slate-400 max-w-sm">Building the world's most accessible distributed print infrastructure.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </button>
+                    <button class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </button>
+                </div>
             </div>
-
-            <div class="text-xs text-gray-400">
-                © 2025 Inksheet.
+            
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-slate-500">
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="mailto:support@inksheet.app" class="hover:text-white transition-colors">Contact Support</a>
+                </div>
+                <p>© 2025 Inksheet Inc.</p>
             </div>
         </div>
     </footer>
@@ -197,7 +281,7 @@
         // Initialize Icons
         lucide.createIcons();
 
-        // Minimal Reveal Animation
+        // Reveal Animation Observer
         const observerOptions = {
             threshold: 0.1,
             rootMargin: "0px 0px -50px 0px"
